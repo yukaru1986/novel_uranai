@@ -2,26 +2,25 @@ import streamlit as st
 from PIL import Image
 import requests
 import pandas as pd
-import json
 import random
 
 main_df = pd.read_csv('main_df.csv', encoding="utf-8")
-authorForUrl = '小川洋子'
-titleForUrl = '密やかな結晶'
+authorForUrl = ''
+titleForUrl = ''
 url = ''
 bookImgUrl = ''
-random_n = 3
 description = ''
 
 image = Image.open('header.png')
 st.image(image)
 
-user_age = st.slider('How old are you?', 16, 90, 33)
+user_age = st.slider('How old are you?', 16, 90, 36)
 
 
 
 def showbook():
     showbooks_df = main_df[main_df['authorPublishedDateAge'] == user_age]
+    print(user_age)
     random_range = len(showbooks_df) - 1
     random_n = random.randrange(0,random_range,1)
     print(random_range)
