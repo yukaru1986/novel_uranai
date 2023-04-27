@@ -10,7 +10,7 @@ authorForUrl = '小川洋子'
 titleForUrl = '密やかな結晶'
 url = ''
 bookImgUrl = ''
-random_n = 1
+random_n = 3
 description = ''
 
 image = Image.open('header.png')
