@@ -20,11 +20,11 @@ user_age = st.slider('How old are you?', 16, 90, 36)
 
 def showbook():
     showbooks_df = main_df[main_df['authorPublishedDateAge'] == user_age]
-    print(user_age)
+    st.write(user_age)
     random_range = len(showbooks_df) - 1
     random_n = random.randrange(0,random_range,1)
-    print(random_range)
-    print(random_n)
+    st.write(random_range)
+    st.write(random_n)
     authorForUrl = showbooks_df.iat[random_n, 1]
     titleForUrl = showbooks_df.iat[random_n, 0]
     base_url = 'https://www.googleapis.com/books/v1/volumes?q=in'
@@ -34,6 +34,7 @@ def showbook():
     printtype = 'printType=books'
     url_list = [urltit, urlaut, urlmax, printtype]
     url = base_url + '&'.join(url_list)
+    st.write(url)
     res = requests.get(url).json()  # 情報の取得,json変換
     items = res['items']
     description = items[0]['volumeInfo'].get('description')
