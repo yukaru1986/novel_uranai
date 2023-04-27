@@ -5,6 +5,9 @@ import requests
 import streamlit as st
 from PIL import Image
 
+APP_ID = 1054605449854620144
+req_url = 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404'
+
 main_df = pd.read_csv('main_df.csv', encoding="utf-8")
 authorForUrl = ''
 titleForUrl = ''
@@ -15,33 +18,29 @@ description = ''
 image = Image.open('header.png')
 st.image(image)
 
-user_age = st.slider('How old are you?', 16, 90, 36)
+user_age = st.slider('How old are you?', 20, 78, 45)
 
 
 
 def showbook():
     showbooks_df = main_df[main_df['authorPublishedDateAge'] == user_age]
-    st.write(user_age)
+
     random_range = len(showbooks_df) - 1
     random_n = random.randrange(0,random_range,1)
     st.write(random_range)
-    st.write(random_n)
+
     authorForUrl = showbooks_df.iat[random_n, 1]
     titleForUrl = showbooks_df.iat[random_n, 0]
-    base_url = 'https://www.googleapis.com/books/v1/volumes?q=in'
-    urlaut = 'inauthor:' + authorForUrl
-    urltit = 'title:' + titleForUrl
-    urlmax = 'maxResults=1'
-    printtype = 'printType=books'
-    url_list = [urltit, urlaut, urlmax, printtype]
-    url = base_url + '&'.join(url_list)
-    st.write(url)
-    res = requests.get(url).json()  # 情報の取得,json変換
-    st.write(res)
-    items = res['items']
-    st.write(items)
-    description = items[0]['volumeInfo'].get('description')
-    bookImgUrl = items[0]['volumeInfo']['imageLinks'].get('thumbnail')
+    params = {
+        'format': 'json',
+        'title': titleForUrl,
+        'author': authorForUrl,
+        'hits': 1,
+        'applicationId': APP_ID
+    }
+    res = requests.get(req_url, params).json() # 情報の取得,json変換
+    description = res['Items'][0]['Item'].get('itemCaption')
+    bookImgUrl = res['Items'][0]['Item'].get('largeImageUrl')
 
     col1, col2 = st.columns([2, 1])
     with col1:
