@@ -1,8 +1,9 @@
+import random
+import json
+import pandas as pd
+import requests
 import streamlit as st
 from PIL import Image
-import requests
-import pandas as pd
-import random
 
 main_df = pd.read_csv('main_df.csv', encoding="utf-8")
 authorForUrl = ''
@@ -36,7 +37,9 @@ def showbook():
     url = base_url + '&'.join(url_list)
     st.write(url)
     res = requests.get(url).json()  # 情報の取得,json変換
+    st.write(res)
     items = res['items']
+    st.write(items)
     description = items[0]['volumeInfo'].get('description')
     bookImgUrl = items[0]['volumeInfo']['imageLinks'].get('thumbnail')
 
