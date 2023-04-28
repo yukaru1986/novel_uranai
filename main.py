@@ -24,11 +24,9 @@ user_age = st.slider('How old are you?', 7, 77, 36)
 
 def showbook():
     uranai_age = user_age // 7 * 3 + 17
-    showbooks_df = main_df[(main_df['authorPublishedDateAge'] >= uranai_age - 2) & (main_df['authorPublishedDateAge'] <= uranai_age + 2)]
+    showbooks_df = main_df[(main_df['authorPublishedDateAge'] >= uranai_age - 5) & (main_df['authorPublishedDateAge'] <= uranai_age + 5)]
     random_range = len(showbooks_df) - 1
     random_n = random.randrange(0,random_range,1)
-    st.write(random_range)
-
     authorForUrl = showbooks_df.iat[random_n, 1]
     titleForUrl = showbooks_df.iat[random_n, 0]
     params = {
@@ -39,8 +37,11 @@ def showbook():
         'applicationId': APP_ID
     }
     res = requests.get(req_url, params).json() # 情報の取得,json変換
-    description = res['Items'][0]['Item'].get('itemCaption')
-    bookImgUrl = res['Items'][0]['Item'].get('largeImageUrl')
+    try:
+        description = res['Items'][0]['Item'].get('itemCaption')
+        bookImgUrl = res['Items'][0]['Item'].get('largeImageUrl')
+    except Exception:
+        pass
 
     col1, col2 = st.columns([2, 1])
     with col1:
@@ -49,6 +50,7 @@ def showbook():
         st.markdown('著者 :')
         st.header(showbooks_df.iat[random_n, 1])
         st.markdown('(本出版当時、' + str(user_age) + '才)')
+        st.text('※著者年齢はだいたいです、本が出版された年から誕生年を引いています')
     with col2:
 
         st.image(bookImgUrl, use_column_width=True)
