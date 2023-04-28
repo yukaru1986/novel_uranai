@@ -8,7 +8,7 @@ from PIL import Image
 APP_ID = 1054605449854620144
 req_url = 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404'
 
-main_df = pd.read_csv('main_df.csv', encoding="utf-8")
+main_df = pd.read_csv('main_df.csv', encoding="shift-jis")
 authorForUrl = ''
 titleForUrl = ''
 url = ''
