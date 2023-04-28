@@ -49,7 +49,7 @@ def showbook():
         st.title('『' + showbooks_df.iat[random_n, 0] + '』')
         st.markdown('著者 :')
         st.header(showbooks_df.iat[random_n, 1])
-        st.markdown('(本出版当時、' + str(showbooks_df.iat[random_n, 4]) + '才)')
+        st.markdown('(本出版当時、' + str(int(showbooks_df.iat[random_n, 4])) + '才くらい)')
         st.text('※著者年齢はだいたいです、本が出版された年から誕生年を引いています')
     with col2:
 
