@@ -18,13 +18,13 @@ description = ''
 image = Image.open('header.png')
 st.image(image)
 
-user_age = st.slider('How old are you?', 20, 78, 45)
+user_age = st.slider('How old are you?', 7, 77, 36)
 
 
 
 def showbook():
-    showbooks_df = main_df[main_df['authorPublishedDateAge'] == user_age]
-
+    uranai_age = user_age // 7 * 3 + 17
+    showbooks_df = main_df[(main_df['authorPublishedDateAge'] >= uranai_age - 2) & (main_df['authorPublishedDateAge'] <= uranai_age + 2)]
     random_range = len(showbooks_df) - 1
     random_n = random.randrange(0,random_range,1)
     st.write(random_range)
