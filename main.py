@@ -15,11 +15,11 @@ url = ''
 bookImgUrl = ''
 description = ''
 
-image = Image.open('header.png')
+image = Image.open('header.jpg')
 st.image(image)
-
-user_age = st.slider('How old are you?', 7, 77, 36)
-
+user_name = st.text_input("お名前は？ニックネームでも。","それがし なにがし")
+user_age = st.slider('何才でしょうか?', 7, 77, 36)
+st.divider()
 
 
 def showbook():
@@ -43,14 +43,16 @@ def showbook():
     except Exception:
         pass
 
+    st.markdown("幸運の小説。それは、読者に深い共感と感動をもたらし、人生を変える可能性さえあるもの。この小説が"+ user_name + "さんにとって幸運の小説であるかもしれません。あなたの人生にとって特別な意味を持ち、読むたびにその価値を再確認できるような小説との出会いを願っております…")
     col1, col2 = st.columns([2, 1])
     with col1:
         st.markdown('タイトル : ')
         st.title('『' + showbooks_df.iat[random_n, 0] + '』')
+        st.markdown('出版時期:'+showbooks_df.iat[random_n, 2][:7])
         st.markdown('著者 :')
         st.header(showbooks_df.iat[random_n, 1])
         st.markdown('(本出版当時、' + str(int(showbooks_df.iat[random_n, 4])) + '才くらい)')
-        st.text('※著者年齢はだいたいです、本が出版された年から誕生年を引いています')
+
     with col2:
 
         st.image(bookImgUrl, use_column_width=True)
@@ -83,3 +85,4 @@ if recommend:
     showbook()
 else:
     st.write('Waiting...')
+st.divider()
